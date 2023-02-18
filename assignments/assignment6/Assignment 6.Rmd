@@ -1,0 +1,70 @@
+---
+title: "Solutions for Assignment 6"
+author: "????"
+date: "2023-02-??"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+[**Delete this line and other instructions within square brackets prior to "kniting" for your final submission**]
+
+## Solution to 1.1
+
+[**Add the steps of your proof in math-mode blocks like the following, and remember to give the reader some narrative around your steps**]
+\begin{align*}
+  ??? &= ???? \\
+  &= ????
+\end{align*}
+
+## Solution to 1.2
+
+[**Add your R code for the function**]
+```{r, message=FALSE}
+# ???? <- function(N, alpha) {
+# ????
+#}
+```
+
+## Solution to 1.3
+
+[**Layout any calculations you have done and add explanations**]
+\begin{align*}
+  ??? &= ???? \\
+  &= ????
+\end{align*}
+
+## Solution to 2.1
+
+[**Add your Stan model code here (and you'll want to save it in a separate Stan file).**]
+```{{stan}}
+data {
+?????
+}
+parameters {
+?????
+}
+model {
+?????
+}
+
+```
+
+## Solution to 2.2
+
+[**Add your R code to sample from the posterior here**]
+```{r, message=FALSE}
+library(rstan)
+
+# ????
+```
+
+## Solution to 2.3
+
+[**Add your R code to make the requisite plots here**]
+```{r, message=FALSE}
+# ????
+```
+
