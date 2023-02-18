@@ -1,0 +1,86 @@
+---
+title: "Practical 1 - Bayesian Term 2"
+author: "Guy Roberts"
+date: "2023-02-08"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# My main section
+
+Here's some maths:
+$$
+\log(x^3) \neq \frac{\exp(3x)}{x}.
+$$
+
+## Align subsection
+
+Adding maths in an "align" environment makes it easier to line things up.
+\begin{align*}
+\mu &\sim \text{N}(0,1),\\
+X_i|\mu &\sim \text{N}(\mu,1), ~~~i=1,\dots,n. 
+\end{align*}
+
+# R section
+
+Here's some very simple R code.
+```{r}
+x <- rnorm(100)
+y <- runif(100) + x
+```
+
+## 3. First Stan Models
+
+```{r}
+library(rstan)
+
+setwd('C:/Users/guyro/OneDrive/Y3/bayesian-modelling/practicals')
+
+our_model <- stan_model('conjugate_1.stan')
+
+our_sample <- sampling(our_model,
+                       data = list(n = 7, X = c(1.20, 1.21, 3.06, 7.89, 5.67, 6.10, 3.90)))
+
+summary(our_sample)
+
+
+```
+
+
+## 3.2 A Tricky Conjugate Analysis
+
+```{r}
+our_data <- list(n = 5,
+                 y = c(15,10, 6, 8, 17))
+
+our_model = stan_model('conjugate_2.stan')
+
+our_sample = sampling(our_model, data=our_data)
+
+summary(our_sample)
+```
+
+## 3.3 Exploring example 8.3.1 (from notes)
+
+```{r}
+data <- list(N = 3 + 10,
+             J = 2,
+             group = c(rep(1,3),
+                       rep(2,10)),
+             X = c(0,1,0,
+                   2,0,0,1,2,0,0,1,1,0))
+
+our_model = stan_model('stan_3.stan')
+
+fit = sampling(our_model, data=data)
+summary(fit)
+
+
+# samples <- extract(fit, pars = c('lambda[1]','lambda[2]'))
+# print(samples)
+# hist(samples)
+```
+
