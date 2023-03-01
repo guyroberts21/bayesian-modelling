@@ -1,7 +1,7 @@
 ---
 title: "Solutions for Assignment 6"
-author: "????"
-date: "2023-02-??"
+author: "Guy Roberts"
+date: "2023-02-26"
 output:
   pdf_document: default
   html_document:
@@ -17,14 +17,32 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Solution to 1.1
 
 [**Add the steps of your proof in math-mode blocks like the following, and remember to give the reader some narrative around your steps**]
+
+Firstly via Bayes Theorem, we know that:
+
 \begin{align*}
-  ??? &= ???? \\
-  &= ????
+  \pi(N) &\propto \pi(N|\theta)\pi(\theta) \\
+  \pi(N) &= \int_{0}^{1} \pi(N|\theta)\pi(\theta)\,d\theta \\
+  \pi(N|\theta) &= (1-\theta)^N \theta \\
+\end{align*}
+
+Now, if we substitute this into our equation for $\pi(N)$ as well as our prior $\theta$:
+
+\begin{align*}
+    \pi(N) &= \int_{0}^{1} (1-\theta)^N \theta \times \frac{\theta^{\alpha-1}}{Beta(\alpha, 1)} \,d\theta \\
+    \pi(N) &= \frac{1}{\beta(\alpha, 1)} \int_{0}^{1} (1-\theta)^N \theta^{\alpha} \,d\theta 
+\end{align*}
+
+Now we can recognise this integral as being the kernel of a $Beta(\alpha+1, N+1)$ distribution. Since we know this will integrate to one (given the multiplicative constant), we know that our final compound distribution will be:
+
+\begin{align*}
+    \pi(N) &= \frac{Beta(\alpha+1,N+1)}{Beta(\alpha, 1)}
 \end{align*}
 
 ## Solution to 1.2
 
 [**Add your R code for the function**]
+
 ```{r, message=FALSE}
 compound_dist <- function(N, alpha) {
   return( beta(alpha+1, N+1) / beta(alpha, 1) )
@@ -33,16 +51,21 @@ compound_dist <- function(N, alpha) {
 
 ## Solution to 1.3
 
-[**Layout any calculations you have done and add explanations**]
+[**Layout any calculations you have done and add explanations**] 
+
+In order to answer this question, we used trial and error of varying values of $\alpha$, this is because we know that:
+
 \begin{align*}
-  ??? &= ???? \\
-  &= ????
+    Pr(N \leq 2) &= \pi(2) + \pi(1) + \pi(0)
 \end{align*}
+
+We find that our solution is approximately $\alpha \approx 0.4349$ from using our function defined earlier.
 
 ## Solution to 2.1
 
 [**Add your Stan model code here (and you'll want to save it in a separate Stan file).**]
-```{{stan}}
+
+``` {{stan}}
 data {
   int<lower=0> n; // num observations
   real X[n];     // observed values
@@ -70,11 +93,12 @@ model {
 ## Solution to 2.2
 
 [**Add your R code to sample from the posterior here**]
+
 ```{r, message=FALSE}
 library(rstan)
 
 # set working dir
-setwd('C:/Users/guyro/Desktop/DU/Maths/Y3/bayesian-modelling/assignments/assignment6')
+setwd('C:/Users/guyro/OneDrive/Y3/bayesian-modelling/assignments/assignment6')
 
 # Compile model
 model = stan_model('model.stan')
@@ -91,6 +115,7 @@ posterior <- sampling(model, data = list(X = X, n = n), iter = 10000, chains = 4
 ## Solution to 2.3
 
 [**Add your R code to make the requisite plots here**]
+
 ```{r, message=FALSE}
 # Extract posterior samples
 mu_samples <- extract(posterior)$mu
@@ -101,4 +126,3 @@ summary(mu_samples)
 # Create histogram
 hist(mu_samples, breaks = 30)
 ```
-

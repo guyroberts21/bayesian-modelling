@@ -3,9 +3,9 @@ compound_dist = function(N, alpha) {
   return(beta(alpha+1, N+1) / beta(alpha, 1))
 }
 
-a = compound_dist(2, 0.435)
-b = compound_dist(1, 0.435)
-c = compound_dist(0, 0.435)
+a = compound_dist(2, 0.4349)
+b = compound_dist(1, 0.4349)
+c = compound_dist(0, 0.4349)
 a+b+c
 
 
