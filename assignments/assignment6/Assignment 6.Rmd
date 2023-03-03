@@ -39,6 +39,12 @@ Now we can recognise this integral as being the kernel of a $Beta(\alpha+1, N+1)
     \pi(N) &= \frac{Beta(\alpha+1,N+1)}{Beta(\alpha, 1)}
 \end{align*}
 
+Now, simplifying the $Beta(\alpha, 1)$ we get:
+
+\begin{align*}
+  \pi(N) &= \alpha Beta(\alpha+1, N+1)
+\end{align*}
+
 ## Solution to 1.2
 
 [**Add your R code for the function**]
