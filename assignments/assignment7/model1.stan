@@ -1,28 +1,19 @@
 data {
   int<lower=0> N; // num obs
-  real x[N];       // obs explanatory
-  real y[N];      // obs response
+  vector[N] x;    // obs explanatory
+  vector[N] y;    // obs response
 }
 
 parameters {
-  real epsilon;          // intercept
-  real beta;             // gradient
-  real<lower=0> sigma_2; // error var.
-}
-
-functions {
-  real inv_square_pdf(real x) {
-    return x^(-2);
-  }
+  real beta;           // gradient
+  real<lower=0> sigma; // error std.
 }
 
 model {
-  // Prior
-  epsilon ~ normal(0, 10000);
-  beta ~ inv_square_pdf(1);
-  sigma_2 ~ inv_gamma(0.1, 0.1);
+  // Priors
+  target += -2 * log(beta); // prior for beta
+  target += inv_gamma_lpdf(sigma | 0.1, 0.1); // prior on sigma^2
   
   // Likelihood
-  for (i in 1:N)
-    y[i] = beta*x[i] + epsilon;
+  target += normal_lpdf(y | beta * x, sigma);
 }
