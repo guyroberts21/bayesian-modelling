@@ -51,8 +51,33 @@ hie_data <- list(N = 40,
                        1,0,1,2,0))
 
 model3 = stan_model('prac3_3.stan')
-sample = sampling(model3, data=hie_data)
-lamda_sample = extract(sample, pars=c('group', 'subgroup'))
+
+# look at the structure of the data
+dotchart(hie_data$X, col = hie_data$group, pch = hie_data$subgroup)
+
+# sample from the posterior
+sample = sampling(model3, data=hie_data, iter=10000)
+
+# extract the samples
+extracted = extract(sample, pars=c("alpha", "beta[1]", "beta[2]"))
+
+plot(density(extracted$alpha))
+plot(density(extracted$`beta[1]`))
+plot(density(extracted$`beta[2]`))
+
+prior_var_alpha <- 2*1/((2+1+1)*(2+1)^2)
+post_var_alpha <- var(extracted$alpha)
+res_alpha = 1 - post_var_alpha/prior_var_alpha
+post_var_alpha
+res_alpha
+
+
+
+
+
+
+
+
 
 
 
