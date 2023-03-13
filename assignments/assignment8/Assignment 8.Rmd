@@ -1,0 +1,106 @@
+---
+title: "Solutions for assignment 8"
+author: "????"
+date: "2023-03-??"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+[**Delete this line and other instructions within square brackets prior to "kniting" for your final submission**]
+
+## Solution to 1.1
+
+[**Add your Stan model code here for M1.**]
+```{{stan}}
+data {
+?????
+}
+parameters {
+?????
+}
+model {
+?????
+}
+
+```
+
+[**Add your Stan model code here for M2.**]
+```{{stan}}
+data {
+?????
+}
+parameters {
+?????
+}
+model {
+?????
+}
+
+```
+
+[**Add your Stan model code here for M3.**]
+```{{stan}}
+data {
+?????
+}
+parameters {
+?????
+}
+model {
+?????
+}
+
+```
+
+## Solution to 1.2
+
+[**Add your R code to sample from the posterior here**]
+```{r, message=FALSE, cache=TRUE}
+library(rstan)
+
+# ????
+```
+
+## Solution to 1.3
+
+[**Add your R code for calculating pseudo-BMA weights here**]
+```{r, message=FALSE, cache=TRUE}
+library(loo)
+
+# ????
+```
+
+[**Add your comments about the weights here**]
+
+
+## Solution to 2.1
+
+[**Show the link between the overarching model and the three models given here**]
+\begin{align*}
+  ???? &= ???? \\
+  &= ????
+\end{align*}
+
+
+## Solution to 2.2
+
+[**Give some discussion about what prior distributions might be appropriate**]
+
+[**Add your Stan model code for sampling from the preposterior here**]
+```{{stan}}
+?????
+
+```
+
+[**Add your R code to sample from the preposterior here**]
+```{r, message=FALSE, cache=TRUE}
+library(rstan)
+
+# ????
+```
+
+[**Explain why the priors you have selected are appropriate and plot the prior densities**]
+
