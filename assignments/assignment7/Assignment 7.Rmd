@@ -1,7 +1,7 @@
 ---
 title: "Solutions for assignment 7"
 author: "Guy Roberts"
-date: "2023-03-04"
+date: "2023-03-08"
 output: pdf_document
 ---
 
@@ -67,7 +67,7 @@ our_data = list(
   y = c(4.02, 8.73, 7.33, 0.51, 12.09, 5.99, 8.91, 4.02)
 )
 
-setwd('C:/Users/guyro/Desktop/DU/Maths/Y3/bayesian-modelling/assignments/assignment7')
+setwd('C:/Users/guyro/OneDrive/Y3/bayesian-modelling/assignments/assignment7/')
 
 model = stan_model('model1.stan')
 fit = sampling(model, our_data, chains=4, iter=10000, warmup=500, thin=1)
