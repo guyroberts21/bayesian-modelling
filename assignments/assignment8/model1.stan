@@ -1,6 +1,6 @@
 data {
   int<lower=0> N;
-  vector[N] h;
+  int<lower=0> h[N];
 }
 
 parameters {
@@ -15,4 +15,10 @@ model {
   for (i in 1:N) {
     h[i] ~ poisson(lambda);
   }
+}
+
+generated quantities {
+  vector[N] log_lik;
+  for (i in 1:N) 
+    log_lik[i] = poisson_lpmf(h[i] | lambda); 
 }

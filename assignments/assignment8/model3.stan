@@ -16,3 +16,9 @@ model {
     h[i] ~ normal(lambda, (lambda*(100-lambda))/100);
   }
 }
+
+generated quantities {
+  vector[N] log_lik;
+  for (i in 1:N) 
+    log_lik[i] = normal_lpdf(h[i] | lambda, (lambda*(100-lambda))/100); 
+}

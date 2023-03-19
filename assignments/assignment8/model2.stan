@@ -1,6 +1,6 @@
 data {
   int<lower=0> N;
-  vector[N] h;
+  int<lower=0> h[N];
 }
 
 parameters {
@@ -13,7 +13,12 @@ model {
   
   // Likelihood
   for (i in 1:N) {
-    target += binomial_lpmf(h[i] | N, N/lambda);
-    //h[i] ~ binomial(100, 100/lambda);
+    h[i] ~ binomial(100, lambda/100);
   }
+}
+
+generated quantities {
+  vector[N] log_lik;
+  for (i in 1:N) 
+    log_lik[i] = binomial_lpmf(h[i] | 100, lambda/100); 
 }
