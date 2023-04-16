@@ -5,7 +5,7 @@ library(ggplot2)
 our_data = list(N = 20,
                 h = c(1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0))
 setwd(
-  'C:/Users/guyro/Desktop/DU/Maths/Y3/bayesian-modelling/assignments/assignment8'
+  'C:/Users/guyro/OneDrive/Y3/bayesian-modelling/assignments/assignment8'
 )
 
 # Load the Stan models into R
@@ -53,5 +53,12 @@ loo_model_weights(list(loo1, loo2, loo3),
 # others, and hence a higher peak. The results also suggest that model 1 is marginally more suitable (given the data) than model 2 - however,
 # the dataset used is small, so perhaps more in-depth analysis is required in order to make an appropriate decision. 
 
+model4 = stan_model('model4.stan')
+
+num_samples = 1000
+samples = sampling(model4, data=list(N=num_samples), iter=10000)
+
+y_sample = extract(samples, par='y_sim')$y_sim
+summary(y_sample)
 
 
