@@ -42,7 +42,7 @@ par(mfrow=c(2,1))
 plot(ts(normvec))
 hist(normvec,30, freq=FALSE)
 lines(density(normvec), col="red")
-par(mfrow=c(1,1)120, 0.08, legend=c("Target", "Proposal"), col=c("red", "blue"))
+par(mfrow=c(1,1))
 
 
 
