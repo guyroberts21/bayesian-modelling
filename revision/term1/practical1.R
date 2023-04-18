@@ -143,24 +143,52 @@ lpost = function(psi)
   return(lprior + llike)
 }
 
-norm2 = function(N, a, lambda)
+# Note: In general, the acceptance probability will 
+# become the RWM simple case when the proposal density
+# being used satisfies the detailed balance condition.
+# Eg. if you use a Gaussian proposal with a fixed variance, 
+# then the proposal will satisfy the detailed balance condition,
+# so the q(x|y) term will cancel out, leaving a simpler
+# version of the acceptance probability.
+
+norm2 = function(N, lambda)
 {
   vec = rep(0, N)
-  vec[1] = theta
+  psi = 0
+  vec[1] = psi
   count = 0 # count the num of accepted candidates
   for (i in 2:N)
   {
-    innov = runif(1, -a, a)
-    can = theta + innov
-    laprob = dnorm(can, log = TRUE) - dnorm(theta, log = TRUE)
+    innov = rnorm(1, 0, lambda)
+    can = innov + psi
+    laprob = lpost(can)-lpost(psi)
+    
     u = runif(1)
     if (log(u) < laprob) {
-      theta = can
+      psi = can
       count = count + 1
     }
-    vec[i] = theta
+    vec[i] = psi
   }
   print(count / (N - 1))
   return(vec)
+}
+
+out = norm2(10000, 0.1)
+plot(ts(out))
+
+# calculate estimates for mean and variance
+# => find a equi-tailed credible interval
+mean(out)
+var(out)
+quantile(out, c(0.025, 0.975))
+
+# generating samples from posterior predictive
+Ns = length(out)
+y26 = rep(0, Ns)
+
+# exp since we have log pdf
+for (i in 1:Ns) {
+  y26[i] = 88.35*exp(rnorm(1, 0, out[i]))
 }
 
