@@ -36,6 +36,67 @@ y = c(
   0,1,1,0,2,2,3,1,1,2,1,1,1,1,2,4,2,0,0,0,1,4,0,0,0,
   1,0,0,0,0,0,1,0,0,1,0,0)
 
+times = seq(1851, 1962, 1)
+plot(
+  times,
+  y,
+  lwd = 2,
+  main = "Coal Disasters",
+  xlab = "Year",
+  ylab = "Number per year"
+)
+
+gibbs = function(N, data)
+{
+  n = length(data)
+  theta = 1
+  lambda = 1
+  k = 112  #initial param values
+  a1 = 1
+  a2 = 1
+  b1 = 1
+  b2 = 1 #prior hyper-params
+  probVec = rep(0, n)             #condiional pmf for k
+  out = matrix(0, nrow = N, ncol = 3)  #store samples here
+  
+  out[1, ] = c(theta, lambda, k) #store initial sample
+  
+  for (i in 2:N)
+  {
+    #Update theta from FCD
+    theta = rgamma(1, a1 + sum(data[1:k]), b1 + k)
+    
+    if (k==n) {
+      lambda = rgamma(a2, b2)
+    } else {
+      #Update lambda from FCD
+      lambda = rgamma(1, a2 + sum(data[(k + 1):n]), b2 + (n - k))
+    }
+    
+    #calculate pmf for k
+    for (j in 1:n)
+    {
+      probVec[j] = exp((lambda - theta) * j) * (theta / lambda) ** sum(data[1:j])
+    }
+    #Update k (Hint: k is discrete...use the sample command)
+    k = sample(n, 1, prob=probVec)
+      
+      out[i, ] = c(theta, lambda, k)
+  }
+  return(out)
+}
+
+out = gibbs(5000, y)
+
+plot(ts(out))
+
+
+
+
+
+
+
+
 
 
 
